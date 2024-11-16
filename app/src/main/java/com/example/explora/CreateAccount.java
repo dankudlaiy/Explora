@@ -27,7 +27,9 @@ public class CreateAccount extends AppCompatActivity {
 
         textViewClickHere.setOnClickListener(v -> {
             Intent intent = new Intent(CreateAccount.this, MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         });
+
     }
 }

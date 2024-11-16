@@ -2,7 +2,6 @@ package com.example.explora;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -28,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
         textViewClickHere.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, CreateAccount.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         });
     }
