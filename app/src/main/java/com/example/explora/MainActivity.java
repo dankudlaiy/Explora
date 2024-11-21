@@ -1,14 +1,15 @@
 package com.example.explora;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.widget.TextView;
-
+import android.util.Patterns;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,18 +18,62 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-        TextView textViewClickHere = findViewById(R.id.textView2);
+        TextInputLayout emailInputLayout = findViewById(R.id.emailInputLayout);
+        TextInputEditText emailEditText = findViewById(R.id.emailEditText);
+        TextInputLayout passwordInputLayout = findViewById(R.id.passwordInputLayout);
+        TextInputEditText passwordEditText = findViewById(R.id.passwordEditText);
 
-        textViewClickHere.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, CreateAccount.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
+        emailInputLayout.setError("Empty email");
+        passwordInputLayout.setError("Empty password");
+
+        emailEditText.addTextChangedListener(new android.text.TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String emailText = s.toString().trim();
+                if (!emailText.isEmpty()) {
+                    emailInputLayout.setError(null);
+                } else {
+                    emailInputLayout.setError("Invalid email");
+                }
+            }
+
+            @Override
+            public void afterTextChanged(android.text.Editable s) {
+            }
         });
+
+        passwordEditText.addTextChangedListener(new android.text.TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String passwordText = s.toString().trim();
+                if (!passwordText.isEmpty()) {
+                    passwordInputLayout.setError(null);
+                } else {
+                    passwordInputLayout.setError("Invalid password");
+                }
+            }
+
+            @Override
+            public void afterTextChanged(android.text.Editable s) {
+            }
+        });
+
+
     }
+
 }
